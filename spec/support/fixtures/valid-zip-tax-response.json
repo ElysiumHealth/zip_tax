@@ -1,0 +1,26 @@
+{
+  "version": "v20",
+  "rCode": 100,
+  "results": [
+    {
+      "geoPostalCode": "10801",
+      "geoCity": "NEW ROCHELLE",
+      "geoCounty": "WESTCHESTER",
+      "geoState": "NY",
+      "taxSales": 0.083750002086163,
+      "taxUse": 0.083750002086163,
+      "txbService": "L",
+      "txbFreight": "Y",
+      "stateSalesTax": 0.03999999910593,
+      "stateUseTax": 0.03999999910593,
+      "citySalesTax": 0.03999999910593,
+      "cityUseTax": 0.03999999910593,
+      "cityTaxCode": "NE 6861",
+      "countySalesTax": 0,
+      "countyUseTax": 0,
+      "countyTaxCode": "WE 5581",
+      "districtSalesTax": 0.003749999916181,
+      "districtUseTax": 0.003749999916181
+    }
+  ]
+}

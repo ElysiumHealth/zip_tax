@@ -15,7 +15,6 @@ module ZipTax
   end
   
   def self.request(zip)
-    key = @@key
     host = @@host
     raise ArgumentError, "Zip-Tax API key must be set using ZipTax.key=" if key.nil?
     path = "/request/v20?key=#{key}&postalcode=#{zip}"
