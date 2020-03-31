@@ -1,35 +1,37 @@
+# frozen_string_literal: true
+
 require "zip_tax/version"
 require 'net/http'
 require 'json'
 
 module ZipTax
-  def self.key=(key)
-    @key = key
-  end
+  class << self
+    attr_accessor :key
 
-  def self.key
-    @key
-  end
+    def host
+      'api.zip-tax.com'
+    end
 
-  def self.host
-    'api.zip-tax.com'
-  end
+    def request(zip)
+      raise ArgumentError, "Zip-Tax API key must be set using ZipTax.key=" if key.nil?
+      path = "/request/v20?key=#{key}&postalcode=#{zip}"
+      response = JSON.parse(Net::HTTP.get(host, path))
+      raise StandardError, "Zip-Tax returned an empty response using the zip code #{zip}" if response["results"].empty?
+      response
+    end
 
-  def self.request(zip)
-    raise ArgumentError, "Zip-Tax API key must be set using ZipTax.key=" if key.nil?
-    path = "/request/v20?key=#{key}&postalcode=#{zip}"
-    response = JSON.parse(Net::HTTP.get(host, path))
-    raise StandardError, "Zip-Tax returned an empty response using the zip code #{zip}" if response["results"].empty?
-    return response
-  end
+    def rate(zip, state = nil)
+      response = request(zip)
 
-  def self.rate(zip, state = nil)
-    response = request(zip)
-    state.nil? || state.upcase == response['results'][0]['geoState'] ? response['results'][0]['taxSales'] : 0.0
-  end
+      if state.nil? || state.upcase == response.dig('results', 0, 'geoState')
+        response.dig('results', 0, 'taxSales')
+      else
+        0.0
+      end
+    end
 
-  def self.info(zip)
-    response = request(zip)
-    return response['results'][0]
+    def info(zip)
+      request(zip).dig('results', 0)
+    end
   end
 end
