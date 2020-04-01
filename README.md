@@ -18,12 +18,16 @@ Or install it yourself as:
 
 ## Usage
 
-### ZipTax.key
+### Configuration
 
-Before you do anything, make sure you set your Zip-Tax api key.
+You can configure this gem in an initializer:
 
-```ruby
-ZipTax.key = "123456789" #sets the api key
+```rb
+ZipTax.configure do |config|
+  config.key = ENV.fetch('ZIP_TAX_API_KEY')
+  config.open_timeout = 2
+  config.read_timeout = 5
+end
 ```
 
 ### ZipTax.request
